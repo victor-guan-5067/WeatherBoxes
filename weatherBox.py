@@ -24,7 +24,7 @@ class weatherBox:
         self.max_temps:str = ""
         self.min_temps:str = ""
         self.rainfall:str = " | rain colour = green\n"
-        self.rain_days:str = " | unit rain days = 0.01 mm\n"
+        self.rain_days:str = " | unit rain days = 1 mm\n"
         self.sunshine:str = ""
         self.footer:str = ""
 
