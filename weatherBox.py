@@ -23,8 +23,8 @@ class weatherBox:
         self.header:str = ""
         self.max_temps:str = ""
         self.min_temps:str = ""
-        self.rainfall:str = " | rain colour = green\n"
-        self.rain_days:str = " | unit rain days = 1 mm\n"
+        self.rainfall:str = ""
+        self.rain_days:str = ""
         self.sunshine:str = ""
         self.footer:str = ""
 
@@ -56,10 +56,12 @@ class weatherBox:
 
     def setRainfall(self, rainfall_list:list):
         if len(rainfall_list) == 13:
+            self.rainfall += " | rain colour = green\n"
             self.rainfall += self.createRows(rainfall_list, "rain mm")
 
     def setRainDays(self, rain_days_list:list):
         if len(rain_days_list) == 13:
+            self.rain_days += " | unit rain days = 1 mm\n"
             self.rain_days += self.createRows(rain_days_list, "rain days")
 
     def setSunshine(self, sunshine_list:list):
