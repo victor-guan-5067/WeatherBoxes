@@ -27,7 +27,7 @@ def makeWeatherBox(parsed_page, url) -> str:
         items = row.text.split()
         i = 0
         for item in items:
-            if i in param_indexes and item != '-':
+            if i in param_indexes and item != '–':
                 item = item[:-1]
                 correct_list = param_indexes.get(i)
                 correct_list.append(item)

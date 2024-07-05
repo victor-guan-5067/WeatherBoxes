@@ -37,10 +37,6 @@ class weatherBox:
  | location    = {} (1991–2020)
 '''
         self.header = header.format(location)
-
-    def testLength(self, items:list, item_name:str):
-        if len(items) != 13:
-            raise ValueError("{} does not have 13 values (12 months plus year value).".format(item_name))
         
     def createRows(self, items: list, row_text: str):
         rows = ""
@@ -51,24 +47,24 @@ class weatherBox:
         return rows
 
     def setMaxTemps(self, max_temps_list:list):
-        self.testLength(max_temps_list, "Max temps")
-        self.max_temps += self.createRows(max_temps_list, "high C")
+        if len(max_temps_list) == 13:
+            self.max_temps += self.createRows(max_temps_list, "high C")
 
     def setMinTemps(self, min_temps_list:list):
-        self.testLength(min_temps_list, "Min temps")
-        self.min_temps += self.createRows(min_temps_list, "low C")
+        if len(min_temps_list) == 13:
+            self.min_temps += self.createRows(min_temps_list, "low C")
 
     def setRainfall(self, rainfall_list:list):
-        self.testLength(rainfall_list, "Rainfall")
-        self.rainfall += self.createRows(rainfall_list, "rain mm")
+        if len(rainfall_list) == 13:
+            self.rainfall += self.createRows(rainfall_list, "rain mm")
 
     def setRainDays(self, rain_days_list:list):
-        self.testLength(rain_days_list, "Rain days")
-        self.rain_days += self.createRows(rain_days_list, "rain days")
+        if len(rain_days_list) == 13:
+            self.rain_days += self.createRows(rain_days_list, "rain days")
 
     def setSunshine(self, sunshine_list:list):
-        self.testLength(sunshine_list, "Sunshine")
-        self.sunshine += self.createRows(sunshine_list, "sun")
+        if len(sunshine_list) == 13:
+            self.sunshine += self.createRows(sunshine_list, "sun")
 
     def setFooter(self, url:str, title:str):
         footer = '''| source 1 = [[Met Office]]<ref name="MetOffice">{{{{cite web
