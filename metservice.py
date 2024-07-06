@@ -28,9 +28,9 @@ def makeWeatherBox(parsed_page, url) -> str:
         i = 0
         for item in items:
             if i in param_indexes and item != '–':
-                item = item[:-1]
+                rounded_val = round(float(item), 1)
                 correct_list = param_indexes.get(i)
-                correct_list.append(item)
+                correct_list.append(str(rounded_val))
             i += 1
 
     weather_box.setMaxTemps(max_temps)
