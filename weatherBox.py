@@ -82,9 +82,3 @@ class weatherBox:
 
     def getWeatherBox(self) -> str:
         return self.header + self.max_temps + self.min_temps + self.rainfall + self.rain_days + self.sunshine + self.footer
-
-if __name__ == "__main__":
-    maxes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-    weather_box = weatherBox()
-    weather_box.setMaxTemps(maxes)
-    print(weather_box.max_temps)
