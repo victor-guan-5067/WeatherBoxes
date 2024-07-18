@@ -7,6 +7,7 @@ def makeWeatherBox(parsed_page, url) -> str:
 
     title = parsed_page.find("title").text
     name = parsed_page.find("h2", {"class": "nearest-station-name"}).text
+    name = name.split('-')[0]
     table_section = parsed_page.find("div", {"data-type":"Station", "data-period":"1991-2020"})
     table = table_section.find("table")
 

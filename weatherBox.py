@@ -18,6 +18,7 @@ class weatherBox:
         11: "Dec",
         12: "year"
     }
+    LIST_LENGTH: int = 13
 
     def __init__(self):
         self.header:str = ""
@@ -45,27 +46,30 @@ class weatherBox:
             rows += " | {} {} = {}\n".format(self.months.get(i), row_text, item)
             i += 1
         return rows
+    
+    def list_length_correct(self, input_list: list) -> bool:
+        return len(input_list) == self.LIST_LENGTH
 
     def setMaxTemps(self, max_temps_list:list):
-        if len(max_temps_list) == 13:
+        if self.list_length_correct(max_temps_list):
             self.max_temps += self.createRows(max_temps_list, "high C")
 
     def setMinTemps(self, min_temps_list:list):
-        if len(min_temps_list) == 13:
+        if self.list_length_correct(min_temps_list):
             self.min_temps += self.createRows(min_temps_list, "low C")
 
     def setRainfall(self, rainfall_list:list):
-        if len(rainfall_list) == 13:
+        if self.list_length_correct(rainfall_list):
             self.rainfall += " | rain colour = green\n"
             self.rainfall += self.createRows(rainfall_list, "rain mm")
 
     def setRainDays(self, rain_days_list:list):
-        if len(rain_days_list) == 13:
+        if self.list_length_correct(rain_days_list):
             self.rain_days += " | unit rain days = 1 mm\n"
             self.rain_days += self.createRows(rain_days_list, "rain days")
 
     def setSunshine(self, sunshine_list:list):
-        if len(sunshine_list) == 13:
+        if self.list_length_correct(sunshine_list):
             self.sunshine += self.createRows(sunshine_list, "sun")
 
     def setFooter(self, url:str, title:str):
