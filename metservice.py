@@ -50,4 +50,5 @@ if __name__ == "__main__":
     page = requests.get(url)
     bs = BeautifulSoup(page.content, "html.parser")
     weather_box:str = makeWeatherBox(bs, url)
-    print(weather_box)
+    with open("weatherbox.txt", "w") as file:
+        file.write(weather_box)
