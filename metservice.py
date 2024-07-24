@@ -31,18 +31,23 @@ def makeWeatherBox(parsed_page, url) -> str:
             if i in param_indexes and item != '–':
                 rounded_val = round(float(item), 1)
                 correct_list = param_indexes.get(i)
-                correct_list.append(str(rounded_val))
+                correct_list.append(rounded_val)
             i += 1
 
-    weather_box.setMaxTemps(max_temps)
-    weather_box.setMinTemps(min_temps)
-    weather_box.setSunshine(sunshine)
-    weather_box.setRainfall(rainfall)
-    weather_box.setRainDays(rain_days)
+    if len(max_temps) == 13:
+        weather_box.setMaxTemps(max_temps)
+    if len(min_temps) == 13:
+        weather_box.setMinTemps(min_temps)
+    if len(sunshine) == 13:
+        weather_box.setSunshine(sunshine)
+    if len(rainfall) == 13:
+        weather_box.setRainfall(rainfall)
+    if len(rain_days) == 13:
+        weather_box.setRainDays(rain_days, "1 mm")
     
-    weather_box.setFooter(url, title)
+    weather_box.setFooter(url, title, "Met Office")
 
-    return weather_box.getWeatherBox()
+    return str(weather_box)
 
 
 if __name__ == "__main__":
