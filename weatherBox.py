@@ -98,7 +98,7 @@ class weatherBox:
 
     def setPrecip(self, precip_list:list[float]):
         if self.list_length_correct(precip_list):
-            self.precip = " | rain colour = green\n"
+            self.precip = " | precipitation colour = green\n"
             self.precip += self.createRows(precip_list, "precipitation {}".format(self.rain_unit))
 
     def setPrecipDays(self, precip_days_list:list[float], unit_precip_days:str):
