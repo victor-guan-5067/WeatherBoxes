@@ -49,25 +49,20 @@ class weatherBox:
 
 
     def setHeader(self, location:str):
-        header = '''
-{{{{Weather box
- | width       = auto
- | metric first = yes
- | single line = yes
- | location    = {} (1991–2020)
+        header = '''{{{{Weather box
+| width       = auto
+| metric first = yes
+| single line = yes
+| location    = {} (1991–2020)
 '''
         self.header = header.format(location)
         
 
     def createRows(self, items: list, row_text: str) -> str:
-        try:
-            self.list_length_correct(items)
-        except:
-            raise ValueError("Length of list must be 13.")
         rows = ""
         i = 0
         for item in items:
-            rows += " | {} {} = {}\n".format(self.months.get(i), row_text, str(item))
+            rows += "| {} {} = {}\n".format(self.months.get(i), row_text, str(item))
             i += 1
         return rows
 
@@ -86,7 +81,7 @@ class weatherBox:
 
     def setMeanTemps(self, mean_temps_list:list[float]):
         if self.list_length_correct(mean_temps_list):
-            self.mean_temps = self.createRows(mean_temps_list, "high {}".format(self.temp_unit))
+            self.mean_temps = self.createRows(mean_temps_list, "mean {}".format(self.temp_unit))
 
     def setMinTemps(self, min_temps_list:list[float]):
         if self.list_length_correct(min_temps_list):
@@ -98,31 +93,31 @@ class weatherBox:
 
     def setPrecip(self, precip_list:list[float]):
         if self.list_length_correct(precip_list):
-            self.precip = " | precipitation colour = green\n"
+            self.precip = "| precipitation colour = green\n"
             self.precip += self.createRows(precip_list, "precipitation {}".format(self.rain_unit))
 
-    def setPrecipDays(self, precip_days_list:list[float], unit_precip_days:str):
+    def setPrecipDays(self, precip_days_list:list[float], unit_precip_days:str = "1.0 mm"):
         if self.list_length_correct(precip_days_list):
-            self.precip_days = " | unit rain days = {}\n".format(unit_precip_days)
+            self.precip_days = "| unit precipitation days = {}\n".format(unit_precip_days)
             self.precip_days += self.createRows(precip_days_list, "precipitation days")
 
     def setRainfall(self, rainfall_list:list[float]):
         if self.list_length_correct(rainfall_list):
-            self.rainfall = " | rain colour = green\n"
+            self.rainfall = "| rain colour = green\n"
             self.rainfall += self.createRows(rainfall_list, "rain {}".format(self.rain_unit))
 
-    def setRainDays(self, rain_days_list:list[float], unit_rain_days:str):
+    def setRainDays(self, rain_days_list:list[float], unit_rain_days:str = "1.0 mm"):
         if self.list_length_correct(rain_days_list):
-            self.rain_days = " | unit rain days = {}\n".format(unit_rain_days)
+            self.rain_days = "| unit rain days = {}\n".format(unit_rain_days)
             self.rain_days += self.createRows(rain_days_list, "rain days")
 
     def setSnowfall(self, snow_list:list[float]):
         if self.list_length_correct(snow_list):
             self.snowfall += self.createRows(snow_list, "snow {}".format(self.snow_unit))
 
-    def setSnowDays(self, snow_days_list:list[float], unit_snow_days:str):
+    def setSnowDays(self, snow_days_list:list[float], unit_snow_days:str = "1.0 cm"):
         if self.list_length_correct(snow_days_list):
-            self.snow_days = " | unit snow days = {}\n".format(unit_snow_days)
+            self.snow_days = "| unit snow days = {}\n".format(unit_snow_days)
             self.snow_days += self.createRows(snow_days_list, "snow days")
 
     def setHumidity(self, humidity_list:list[float]):
@@ -137,15 +132,27 @@ class weatherBox:
         if self.list_length_correct(sunshine_list):
             self.sunshine = self.createRows(sunshine_list, "sun")
 
-    def setFooter(self, url:str, title:str, agency:str):
-        footer = '''| source 1 = [[{}]]<ref>{{{{cite web
+    def setFooter(self, url:str, title:str, agency:str, format: str|None = None):
+        date_string = date.today().strftime("%B %-d, %Y")
+        footer: str
+        if (format == None):
+            footer = '''| source 1 = [[{}]]<ref>{{{{cite web
 |url = {}
 |title = {}
 |publisher = {}
 |access-date = {}}}}}</ref>
 }}}}'''
-        date_string = date.today().strftime("%B %-d, %Y")
-        footer = footer.format(agency, url, title, agency, date_string)
+            footer = footer.format(agency, url, title, agency, date_string)
+        else:
+            footer = '''| source 1 = [[{}]]<ref>{{{{cite web
+|url = {}
+|title = {}
+|publisher = {}
+|format = {}
+|access-date = {}}}}}</ref>
+}}}}'''
+            footer = footer.format(agency, url, title, agency, format, date_string)
+
         self.footer = footer
 
     def __str__(self):
