@@ -13,7 +13,7 @@ def makeWeatherBox(parsed_page, url) -> str:
 
     weather_box = weatherBox()
 
-    weather_box.setHeader(name)
+    weather_box.setHeader(name, "1991–2020")
 
     max_temps: list = []
     min_temps: list = []

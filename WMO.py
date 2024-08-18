@@ -73,7 +73,7 @@ def makeWeatherBox(url:str) -> str:
 
     
     location: str = location.title()
-    weather_box.setHeader(location)
+    weather_box.setHeader(location, "1991–2020")
 
     title:str = location + " Climate Normals for 1991-2020"
     weather_box.setFooter(url, title, agency="National Oceanic and Atmospheric Administration", format="CSV")

@@ -48,14 +48,14 @@ class weatherBox:
         self.snow_unit = "in"
 
 
-    def setHeader(self, location:str):
+    def setHeader(self, location:str, years: str):
         header = '''{{{{Weather box
 | width       = auto
 | metric first = yes
 | single line = yes
-| location    = {} (1991–2020)
+| location    = {} ({})
 '''
-        self.header = header.format(location)
+        self.header = header.format(location, years)
         
 
     def createRows(self, items: list, row_text: str) -> str:
@@ -68,7 +68,7 @@ class weatherBox:
 
     
     def list_length_correct(self, input_list: list) -> bool:
-        return len(input_list) == 13
+        return (len(input_list) == 13 or len(input_list) == 12)
     
 
     def setRecordHighs(self, record_highs_list:list[float]):
@@ -96,7 +96,7 @@ class weatherBox:
             self.precip = "| precipitation colour = green\n"
             self.precip += self.createRows(precip_list, "precipitation {}".format(self.rain_unit))
 
-    def setPrecipDays(self, precip_days_list:list[float], unit_precip_days:str = "1.0 mm"):
+    def setPrecipDays(self, precip_days_list:list[float], unit_precip_days:str = "1 mm"):
         if self.list_length_correct(precip_days_list):
             self.precip_days = "| unit precipitation days = {}\n".format(unit_precip_days)
             self.precip_days += self.createRows(precip_days_list, "precipitation days")
@@ -133,7 +133,7 @@ class weatherBox:
             self.sunshine = self.createRows(sunshine_list, "sun")
 
     def setFooter(self, url:str, title:str, agency:str, format: str|None = None):
-        date_string = date.today().strftime("%B %-d, %Y")
+        date_string = date.today().strftime("%-d %B %Y")
         footer: str
         if (format == None):
             footer = '''| source 1 = [[{}]]<ref>{{{{cite web
