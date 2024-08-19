@@ -96,9 +96,10 @@ class weatherBox:
             self.precip = "| precipitation colour = green\n"
             self.precip += self.createRows(precip_list, "precipitation {}".format(self.rain_unit))
 
-    def setPrecipDays(self, precip_days_list:list[float], unit_precip_days:str = "1 mm"):
+    def setPrecipDays(self, precip_days_list:list[float], unit_precip_days:str = None):
         if self.list_length_correct(precip_days_list):
-            self.precip_days = "| unit precipitation days = {}\n".format(unit_precip_days)
+            if (unit_precip_days != None):
+                self.precip_days = "| unit precipitation days = {}\n".format(unit_precip_days)
             self.precip_days += self.createRows(precip_days_list, "precipitation days")
 
     def setRainfall(self, rainfall_list:list[float]):
@@ -106,9 +107,10 @@ class weatherBox:
             self.rainfall = "| rain colour = green\n"
             self.rainfall += self.createRows(rainfall_list, "rain {}".format(self.rain_unit))
 
-    def setRainDays(self, rain_days_list:list[float], unit_rain_days:str = "1.0 mm"):
+    def setRainDays(self, rain_days_list:list[float], unit_rain_days:str = None):
         if self.list_length_correct(rain_days_list):
-            self.rain_days = "| unit rain days = {}\n".format(unit_rain_days)
+            if (unit_rain_days != None):
+                self.rain_days = "| unit rain days = {}\n".format(unit_rain_days)
             self.rain_days += self.createRows(rain_days_list, "rain days")
 
     def setSnowfall(self, snow_list:list[float]):
