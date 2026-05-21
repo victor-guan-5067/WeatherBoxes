@@ -40,6 +40,7 @@ class weatherBox:
         self.humidity:str = ""
         self.dew_point:str = ""
         self.footer:str = ""
+        self.source_2:str = ""
 
 
     def Americanize(self):
@@ -143,7 +144,7 @@ class weatherBox:
 |title = {}
 |publisher = {}
 |access-date = {}}}}}</ref>
-}}}}'''
+'''
             footer = footer.format(agency, url, title, agency, date_string)
         else:
             footer = '''| source 1 = [[{}]]<ref>{{{{cite web
@@ -152,10 +153,30 @@ class weatherBox:
 |publisher = {}
 |format = {}
 |access-date = {}}}}}</ref>
-}}}}'''
+'''
             footer = footer.format(agency, url, title, agency, format, date_string)
 
         self.footer = footer
 
+    def setFooter2(self, url:str, title:str, agency:str, format: str|None = None):
+        date_string = date.today().strftime("%-d %B %Y")
+        if (format == None):
+            source_2 = '''| source 2 = [[{}]]<ref>{{{{cite web
+|url = {}
+|title = {}
+|publisher = {}
+|access-date = {}}}}}</ref>
+'''
+            self.source_2 = source_2.format(agency, url, title, agency, date_string)
+        else:
+            source_2 = '''| source 2 = [[{}]]<ref>{{{{cite web
+|url = {}
+|title = {}
+|publisher = {}
+|format = {}
+|access-date = {}}}}}</ref>
+'''
+            self.source_2 = source_2.format(agency, url, title, agency, format, date_string)
+
     def __str__(self):
-        return self.header + self.record_highs + self.max_temps + self.mean_temps + self.min_temps + self.record_lows + self.precip + self.precip_days + self.rainfall + self.rain_days + self.snowfall + self.snow_days + self.humidity + self.dew_point + self.sunshine + self.footer
+        return self.header + self.record_highs + self.max_temps + self.mean_temps + self.min_temps + self.record_lows + self.precip + self.precip_days + self.rainfall + self.rain_days + self.snowfall + self.snow_days + self.humidity + self.dew_point + self.sunshine + self.footer + self.source_2 + "}}"
