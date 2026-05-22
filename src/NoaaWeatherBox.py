@@ -1,5 +1,5 @@
 from weatherBox import weatherBox
-import os
+import pandas as pd
 
 
 def parse_records(records_str: str) -> list[str]:
@@ -8,12 +8,12 @@ def parse_records(records_str: str) -> list[str]:
 
 
 if __name__ == '__main__':
-    file_path = input("File path: ")
+    url = input("URL: ")
     location = input("Location: ")
     state = input("State: ")
     begin_year = input("Begin year: ")
-    end_year = input("End year (blank for 'por'): ")
-    end_year = "por" if end_year == '' else end_year
+    end_year = input("End year (blank for 'present'): ")
+    end_year = "present" if end_year == '' else end_year
     record_high_input = input("Record highs: ")
     record_low_input = input("Record lows: ")
     nowdata_url = input("NOWData url: ")
@@ -23,26 +23,25 @@ if __name__ == '__main__':
 
     precips, snows, highs, lows, means = [], [], [], [], []
 
-    with open(file_path, newline='') as climate_data:
-        climate_data.readline()
-        for row in climate_data:
-            split_row = row.split(",")
-            for i, category in col_map.items():
-                if i >= len(split_row):
-                    continue
-                val = split_row[i].replace(' ', '').replace('"', '').replace('\n', '')
-                match category:
-                    case 'precipitation':
-                        precips.append(val)
-                    case 'snow':
-                        if val:
-                            snows.append(val)
-                    case 'mean':
-                        means.append(val)
-                    case 'high':
-                        highs.append(val)
-                    case 'low':
-                        lows.append(val)
+    climate_data = pd.read_csv(url)
+
+    for index, row in climate_data.iterrows():
+        for i, category in col_map.items():
+            if i >= len(row):
+                continue
+            val = row[i].replace(' ', '').replace('"', '').replace('\n', '')
+            match category:
+                case 'precipitation':
+                    precips.append(val)
+                case 'snow':
+                    if val:
+                        snows.append(val)
+                case 'mean':
+                    means.append(val)
+                case 'high':
+                    highs.append(val)
+                case 'low':
+                    lows.append(val)
 
     highs.append(f'{sum(float(x) for x in highs) / 12:.1f}')
     means.append(f'{sum(float(x) for x in means) / 12:.1f}')
@@ -75,12 +74,5 @@ if __name__ == '__main__':
     box.setFooter(nowdata_url, title, "National Oceanic and Atmospheric Administration")
     box.setFooter2(pdf_url, title, "National Oceanic and Atmospheric Administration", format="PDF")
 
-    if state:
-        output_dir = os.path.join(os.getcwd(), state)
-        os.makedirs(output_dir, exist_ok=True)
-        path = os.path.join(output_dir, f'{location}.txt')
-    else:
-        path = f'{location}.txt'
-
-    with open(path, 'w') as f:
-        print(str(box), file=f)
+    with open("weatherbox.txt", "w") as file:
+        file.write(str(box))
